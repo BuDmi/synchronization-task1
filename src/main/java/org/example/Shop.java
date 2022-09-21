@@ -2,11 +2,12 @@ package org.example;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class Shop {
     private List<Car> cars = new ArrayList<>();
     private final int carNumForSellPlan = 10;
-    int soldCar = 0;
+    AtomicInteger soldCar = new AtomicInteger(0);
 
     public synchronized Car sellCar() {
         try {
@@ -16,9 +17,8 @@ public class Shop {
                 wait();
             }
 
-            soldCar++;
             System.out.println(Thread.currentThread().getName() + " drove on new car");
-            System.out.println("Sold " + soldCar + " cars");
+            System.out.println("Sold " + soldCar.incrementAndGet() + " cars");
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
@@ -32,7 +32,7 @@ public class Shop {
     }
 
     public boolean isFinishedSellPlan() {
-        return soldCar == carNumForSellPlan;
+        return soldCar.get() == carNumForSellPlan;
     }
 }
 

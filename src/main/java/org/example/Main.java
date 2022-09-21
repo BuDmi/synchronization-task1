@@ -15,10 +15,8 @@ public class Main {
         producer.start();
 
         while (!shop.isFinishedSellPlan()) {
-            if (shop.soldCar >= 10) {
-                System.out.println("Plan completed");
-                producer.interrupt();
-            }
         }
+        System.out.println("Plan completed");
+        threadGroup.interrupt();
     }
 }
