@@ -7,7 +7,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class Shop {
     private List<Car> cars = new ArrayList<>();
     private int carNumForSellPlan;
-    AtomicInteger soldCar = new AtomicInteger(0);
+    private AtomicInteger soldCar = new AtomicInteger(0);
 
     public Shop(int carNumForSellPlan) {
         this.carNumForSellPlan = carNumForSellPlan;
