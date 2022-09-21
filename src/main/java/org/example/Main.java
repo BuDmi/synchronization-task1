@@ -2,14 +2,17 @@ package org.example;
 
 public class Main {
     public static void main(String[] args) {
-        final Shop shop = new Shop();
+        final int carNumForSellPlan = 10;
+        final int carProducingTime = 2000;
+        final int carWaitingTime = 3000;
+        final Shop shop = new Shop(carNumForSellPlan);
 
         ThreadGroup threadGroup = new ThreadGroup("group");
 
-        Producer producer = new Producer(threadGroup, shop, "Toyota", 2000);
+        Producer producer = new Producer(threadGroup, shop, "Toyota", carProducingTime);
 
-        for(int i = 1; i < 11; i++) {
-            new Client(threadGroup, shop, "Client " + i, 3000).start();
+        for(int i = 0; i < carNumForSellPlan; i++) {
+            new Client(threadGroup, shop, "Client " + (i + 1), carWaitingTime).start();
         }
 
         producer.start();

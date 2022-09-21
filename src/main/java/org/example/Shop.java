@@ -6,8 +6,12 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class Shop {
     private List<Car> cars = new ArrayList<>();
-    private final int carNumForSellPlan = 10;
+    private int carNumForSellPlan;
     AtomicInteger soldCar = new AtomicInteger(0);
+
+    public Shop(int carNumForSellPlan) {
+        this.carNumForSellPlan = carNumForSellPlan;
+    }
 
     public synchronized Car sellCar() {
         try {
