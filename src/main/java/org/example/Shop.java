@@ -5,9 +5,9 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Shop {
-    private List<Car> cars = new ArrayList<>();
-    private int carNumForSellPlan;
-    private AtomicInteger soldCar = new AtomicInteger(0);
+    private final List<Car> cars = new ArrayList<>();
+    private final int carNumForSellPlan;
+    private final AtomicInteger soldCar = new AtomicInteger(0);
 
     public Shop(int carNumForSellPlan) {
         this.carNumForSellPlan = carNumForSellPlan;
@@ -24,7 +24,9 @@ public class Shop {
             System.out.println(Thread.currentThread().getName() + " drove on new car");
             System.out.println("Sold " + soldCar.incrementAndGet() + " cars");
         } catch (InterruptedException e) {
-            throw new RuntimeException(e);
+            Thread.currentThread().interrupt();
+            System.out.println(Thread.currentThread().getName() + " finished shopping");
+            return null;
         }
         return cars.remove(0);
     }
@@ -36,7 +38,7 @@ public class Shop {
     }
 
     public boolean isFinishedSellPlan() {
-        return soldCar.get() == carNumForSellPlan;
+        return soldCar.get() >= carNumForSellPlan;
     }
 }
 

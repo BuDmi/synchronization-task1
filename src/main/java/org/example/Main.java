@@ -9,13 +9,10 @@ public class Main {
 
         ThreadGroup threadGroup = new ThreadGroup("group");
 
-        Producer producer = new Producer(threadGroup, shop, "Toyota", carProducingTime);
-
-        for(int i = 0; i < carNumForSellPlan; i++) {
-            new Client(threadGroup, shop, "Client " + (i + 1), carWaitingTime).start();
-        }
-
-        producer.start();
+        new Producer(threadGroup, shop, "Toyota", carProducingTime).start();
+        new Client(threadGroup, shop, "Client 1", carWaitingTime).start();
+        new Client(threadGroup, shop, "Client 2", carWaitingTime).start();
+        new Client(threadGroup, shop, "Client 3", carWaitingTime).start();
 
         while (!shop.isFinishedSellPlan()) {
         }
